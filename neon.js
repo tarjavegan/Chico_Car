@@ -32,6 +32,8 @@
   const rand = (a, b) => Math.random() * (b - a) + a;
   const lerp = (a, b, t) => a + (b - a) * t;
 
+  let rafLoopsPaused = false;
+
   const isMobile = () => window.matchMedia('(max-width:480px)').matches;
   const isTablet = () => window.matchMedia('(max-width:768px)').matches;
   const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -140,6 +142,7 @@
     hero.addEventListener('mouseleave', () => { targetX = 0; targetY = 0; }, { passive: true });
 
     function tick() {
+      if (rafLoopsPaused) { rafId = null; return; }
       currentX = lerp(currentX, targetX, CFG.lerpSpeed);
       currentY = lerp(currentY, targetY, CFG.lerpSpeed);
 
@@ -183,6 +186,7 @@
     hero.addEventListener('mouseleave', () => { mx = 0; my = 0; }, { passive: true });
 
     function tick() {
+      if (rafLoopsPaused) { rafId = null; return; }
       tx = lerp(tx, mx, 0.03);
       ty = lerp(ty, my, 0.03);
       layers.forEach(({ el, depth }) => {
@@ -240,7 +244,11 @@
 
     btn.addEventListener('click', e => {
       e.preventDefault();
-      window.scrollTo(0, 0);
+      rafLoopsPaused = true;
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      requestAnimationFrame(() => { rafLoopsPaused = false; });
     });
   }
 
