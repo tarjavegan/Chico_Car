@@ -314,7 +314,7 @@ button{font-family:inherit;cursor:pointer}
 /* ── Placa desligada (fase 1-2) ── */
 .sign-off{position:relative;z-index:1}
 .sign-off img{
-  filter:brightness(.42) contrast(1.15) saturate(.6);
+  filter:brightness(.55) contrast(1.1) saturate(.7);
   transition:opacity 6s cubic-bezier(.4,0,.2,1);
 }
 .sign-off-overlay{

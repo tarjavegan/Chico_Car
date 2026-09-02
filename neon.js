@@ -95,7 +95,7 @@
               // Saturação e brilho começam a aumentar antes do crossfade
               const offImg = signStage ? signStage.querySelector('.sign-off img') : null;
               if (offImg) {
-                offImg.style.filter = 'brightness(.55) contrast(1.2) saturate(.8)';
+                offImg.style.filter = 'brightness(.65) contrast(1.15) saturate(.85)';
                 offImg.style.transition = 'filter 1.5s ease-in';
               }
               break;
