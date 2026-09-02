@@ -1,6 +1,6 @@
 /* ============================================================
-   NEON.JS — THE NEON GARAGE
-   Timeline sequencial, partículas, mouse 3D, parallax
+   NEON.JS — THE NEON GARAGE (PHOTO-BASED)
+   "A Oficina Desperta" timeline, partículas, mouse 3D
    Otimizado: mobile, tablet, smart TV, reduced-motion
    ============================================================ */
 
@@ -17,13 +17,14 @@
   };
 
   const CFG = {
-    particleCountMobile: 12,
-    particleCountTablet: 25,
-    particleCountDesktop: 40,
-    particleMinSize: 1.5,
-    particleMaxSize: 4,
-    maxRotate: 6,
-    lerpSpeed: 0.04,
+    particleCountMobile: 10,
+    particleCountTablet: 20,
+    particleCountDesktop: 30,
+    particleMinSize: 1,
+    particleMaxSize: 3,
+    maxRotateX: 4,
+    maxRotateY: 5,
+    lerpSpeed: 0.035,
     timelineDelay: 200
   };
 
@@ -39,55 +40,104 @@
   const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
   // ============================================================
-  //  1. TIMELINE SEQUENCIAL
+  //  1. TIMELINE — "A OFICINA DESPERTA"
+  //  Fases: dark → sign-off visible → crossfade ligada →
+  //         glow + reflection + lens flare → texto → rep card
   // ============================================================
   function initTimeline() {
+    const heroText = $('.hero-text');
+    const signStage = $('.sign-stage');
+    const glowOverlay = $('.sign-glow-overlay');
+    const reflection = $('.sign-reflection');
+    const flare = $('.lens-flare');
+    const repCard = $('.rep-card-neon');
+
     if (prefersReducedMotion()) {
-      $$('.sign-frame,.neon-logo,.neon-chico,.neon-car,.neon-divider,.neon-mecanica,.service-line,.phone-line,.hero-text,.hero-ctas,.rep-card-neon,.lens-flare')
-        .forEach(el => el && el.classList.add('neon-visible'));
+      // Instant reveal for reduced-motion users
+      [heroText, signStage, repCard].forEach(el => el && el.classList.add('visible'));
+      if (glowOverlay) { glowOverlay.style.opacity = '1'; glowOverlay.classList.add('active'); }
+      if (reflection) { reflection.style.opacity = '1'; reflection.classList.add('active'); }
+      if (flare) { flare.style.opacity = '1'; flare.classList.add('active'); }
+      const vGlow = $('.volumetric-glow');
+      if (vGlow) { vGlow.style.opacity = '1'; vGlow.classList.add('active'); }
+      injectLitSign(signStage);
       return;
     }
 
-    const sign = $('.sign-frame');
-    const logo = $('.neon-logo');
-    const chico = $('.neon-chico');
-    const car = $('.neon-car');
-    const divider = $('.neon-divider');
-    const mec = $('.neon-mecanica');
-    const services = $$('.service-line');
-    const phones = $$('.phone-line');
-    const heroText = $('.hero-text');
-    const heroCtas = $('.hero-ctas');
-    const repCard = $('.rep-card-neon');
-    const flare = $('.lens-flare');
+    if (!signStage) return;
 
-    if (!sign) return;
-
+    // Timeline: [delay_ms, action]
+    // Cinematic: desligada visível 4s → transição suave 3.2s → glow+reflection+flare → rep
     const tl = [
-      [sign, 0, 'neon-visible'],
-      [logo, 400, 'neon-visible'],
-      [chico, 700, 'neon-visible'],
-      [car, 800, 'neon-visible'],
-      [divider, 1100, 'neon-visible'],
-      [mec, 1400, 'neon-visible'],
-      ...services.map((s, i) => [s, 1800 + i * 250, 'neon-visible']),
-      ...phones.map((p, i) => [p, 3200 + i * 300, 'neon-visible']),
-      [heroText, 3800, 'neon-visible'],
-      [heroCtas, 4100, 'neon-visible'],
-      [repCard, 4500, 'neon-visible'],
-      [flare, 5000, 'neon-visible']
+      [0, 'text'],
+      [200, 'stage'],
+      [4000, 'crossfade-start'],   // brilho começa a surgir
+      [5000, 'crossfade'],          // placa ligada injetada
+      [5800, 'glow'],              // glow volumétrico
+      [6400, 'reflection'],        // reflexo piso
+      [6800, 'flare'],             // lens flare
+      [7200, 'rep']                // rep card
     ];
 
     setTimeout(() => {
-      tl.forEach(([el, delay, cls]) => {
-        if (!el) return;
-        setTimeout(() => el.classList.add(cls), delay);
+      tl.forEach(([delay, action]) => {
+        setTimeout(() => {
+          switch (action) {
+            case 'text':
+              if (heroText) heroText.classList.add('visible');
+              break;
+            case 'stage':
+              if (signStage) signStage.classList.add('visible');
+              break;
+            case 'crossfade-start':
+              // Saturação e brilho começam a aumentar antes do crossfade
+              const offImg = signStage ? signStage.querySelector('.sign-off img') : null;
+              if (offImg) {
+                offImg.style.filter = 'brightness(.55) contrast(1.2) saturate(.8)';
+                offImg.style.transition = 'filter 1.5s ease-in';
+              }
+              break;
+            case 'crossfade':
+              // Inject lit sign photo and crossfade
+              injectLitSign(signStage);
+              break;
+            case 'glow':
+              if (glowOverlay) { glowOverlay.style.opacity = '1'; glowOverlay.classList.add('active'); }
+              // Volumetric glow também
+              const vGlow = $('.volumetric-glow');
+              if (vGlow) { vGlow.style.opacity = '1'; vGlow.classList.add('active'); }
+              break;
+            case 'reflection':
+              if (reflection) { reflection.style.opacity = '1'; reflection.classList.add('active'); }
+              break;
+            case 'flare':
+              if (flare) { flare.style.opacity = '1'; flare.classList.add('active'); }
+              break;
+            case 'rep':
+              if (repCard) repCard.classList.add('visible');
+              break;
+          }
+        }, delay);
       });
     }, CFG.timelineDelay);
   }
 
+  // Inject the lit sign photo and crossfade it in
+  function injectLitSign(stage) {
+    const photo = document.createElement('div');
+    photo.className = 'sign-photo sign-on';
+    photo.innerHTML = '<img src="placa ligada.png" alt="Placa Chico Car Serviços Automotivos iluminada com neon laranja" width="400" height="533">';
+    stage.appendChild(photo);
+
+    // Force reflow, then trigger crossfade
+    photo.offsetHeight;
+    requestAnimationFrame(() => {
+      photo.style.opacity = '1';
+    });
+  }
+
   // ============================================================
-  //  2. PARTÍCULAS
+  //  2. PARTÍCULAS ATMOSFÉRICAS
   // ============================================================
   function initParticles() {
     const container = $('.particles-container');
@@ -98,19 +148,23 @@
     else if (isTablet()) count = CFG.particleCountTablet;
 
     const fragment = document.createDocumentFragment();
+    const useBlur = !isMobile();
     for (let i = 0; i < count; i++) {
       const p = document.createElement('div');
       p.className = 'particle';
       const size = rand(CFG.particleMinSize, CFG.particleMaxSize);
+      const depth = rand(0, 1);
+      const blur = useBlur && depth < 0.3 ? rand(1, 2.5) : 0;
       Object.assign(p.style, {
         width: size + 'px',
         height: size + 'px',
         left: rand(0, 100) + '%',
         top: rand(0, 100) + '%',
-        opacity: rand(0.2, 0.7),
-        animationDuration: rand(6, 15) + 's',
-        animationDelay: rand(0, 8) + 's',
-        '--drift': rand(-40, 40) + 'px'
+        opacity: rand(0.15, 0.5) * (0.5 + depth * 0.5),
+        animationDuration: rand(8, 18) + 's',
+        animationDelay: rand(0, 10) + 's',
+        '--drift': rand(-30, 30) + 'px',
+        filter: blur > 0 ? `blur(${blur}px)` : 'none'
       });
       fragment.appendChild(p);
     }
@@ -118,14 +172,14 @@
   }
 
   // ============================================================
-  //  3. MOUSE 3D (desktop only)
+  //  3. MOUSE 3D — perspective on .sign-stage (max 5°)
   // ============================================================
   function initMouse3D() {
     if (isTablet() || prefersReducedMotion()) return;
 
     const hero = $('.hero-neon');
-    const sign = $('.sign-frame');
-    if (!hero || !sign) return;
+    const stage = $('.sign-stage');
+    if (!hero || !stage) return;
 
     let targetX = 0, targetY = 0;
     let currentX = 0, currentY = 0;
@@ -134,12 +188,17 @@
 
     hero.addEventListener('mousemove', e => {
       const rect = hero.getBoundingClientRect();
-      targetX = ((e.clientX - rect.left) / rect.width - 0.5) * CFG.maxRotate;
-      targetY = ((e.clientY - rect.top) / rect.height - 0.5) * -CFG.maxRotate;
+      targetX = ((e.clientX - rect.left) / rect.width - 0.5) * CFG.maxRotateY;
+      targetY = ((e.clientY - rect.top) / rect.height - 0.5) * -CFG.maxRotateX;
       active = true;
+      if (!rafId && !rafLoopsPaused) tick();
     }, { passive: true });
 
-    hero.addEventListener('mouseleave', () => { targetX = 0; targetY = 0; }, { passive: true });
+    hero.addEventListener('mouseleave', () => {
+      targetX = 0;
+      targetY = 0;
+      active = false;
+    }, { passive: true });
 
     function tick() {
       if (rafLoopsPaused) { rafId = null; return; }
@@ -147,10 +206,12 @@
       currentY = lerp(currentY, targetY, CFG.lerpSpeed);
 
       if (active || Math.abs(currentX) > 0.01 || Math.abs(currentY) > 0.01) {
-        sign.style.transform = `perspective(1000px) rotateX(${currentY}deg) rotateY(${currentX}deg)`;
+        const tz = active ? 8 : 0;
+        stage.style.transform = `perspective(1200px) rotateX(${currentY}deg) rotateY(${currentX}deg) translateZ(${tz}px) scale(1)`;
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rafId = null;
       }
-
-      rafId = requestAnimationFrame(tick);
     }
     tick();
 
@@ -161,49 +222,7 @@
   }
 
   // ============================================================
-  //  4. PARALLAX (desktop only)
-  // ============================================================
-  function initParallax() {
-    if (isTablet() || prefersReducedMotion()) return;
-
-    const hero = $('.hero-neon');
-    if (!hero) return;
-
-    const layers = [
-      { el: $('.mesh-layer'), depth: 0.02 },
-      { el: $('.volumetric-light'), depth: 0.04 },
-      { el: $('.smoke-layer'), depth: 0.03 }
-    ].filter(l => l.el);
-
-    let mx = 0, my = 0, tx = 0, ty = 0, rafId = null;
-
-    hero.addEventListener('mousemove', e => {
-      const rect = hero.getBoundingClientRect();
-      mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    }, { passive: true });
-
-    hero.addEventListener('mouseleave', () => { mx = 0; my = 0; }, { passive: true });
-
-    function tick() {
-      if (rafLoopsPaused) { rafId = null; return; }
-      tx = lerp(tx, mx, 0.03);
-      ty = lerp(ty, my, 0.03);
-      layers.forEach(({ el, depth }) => {
-        el.style.transform = `translate(${tx * depth * 100}px, ${ty * depth * 100}px)`;
-      });
-      rafId = requestAnimationFrame(tick);
-    }
-    tick();
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden && rafId) { cancelAnimationFrame(rafId); rafId = null; }
-      else if (!document.hidden && !rafId) tick();
-    });
-  }
-
-  // ============================================================
-  //  5. SMOOTH REVEAL
+  //  4. SMOOTH REVEAL (IntersectionObserver)
   // ============================================================
   function initReveal() {
     if (prefersReducedMotion()) {
@@ -221,7 +240,7 @@
   }
 
   // ============================================================
-  //  6. NAV SCROLL
+  //  5. NAV SCROLL
   // ============================================================
   function initNav() {
     const nav = $('#navbar');
@@ -232,7 +251,7 @@
   }
 
   // ============================================================
-  //  7. BACK TO TOP — INSTANT SCROLL (zero lag)
+  //  6. BACK TO TOP — INSTANT SCROLL (zero lag)
   // ============================================================
   function initBTT() {
     const btn = $('.btt');
@@ -253,7 +272,7 @@
   }
 
   // ============================================================
-  //  8. MOBILE MENU
+  //  7. MOBILE MENU
   // ============================================================
   function initMenu() {
     const hamburger = $('.hamburger');
@@ -279,7 +298,7 @@
   }
 
   // ============================================================
-  //  9. MAP LAZY LOAD
+  //  8. MAP LAZY LOAD
   // ============================================================
   function initMap() {
     const section = $('#mapa');
@@ -299,7 +318,7 @@
   }
 
   // ============================================================
-  //  10. FAQ ACCORDION
+  //  9. FAQ ACCORDION
   // ============================================================
   function initFAQ() {
     $$('.faq-q').forEach(btn => {
@@ -320,7 +339,7 @@
   }
 
   // ============================================================
-  //  11. CAROUSEL
+  //  10. CAROUSEL
   // ============================================================
   function initCarousel() {
     const track = $('.carousel-track');
@@ -364,7 +383,6 @@
     initTimeline();
     initParticles();
     initMouse3D();
-    initParallax();
     initReveal();
     initNav();
     initBTT();
@@ -372,6 +390,23 @@
     initMap();
     initFAQ();
     initCarousel();
+
+    // Safety fallback: ensure everything is visible after 10s
+    setTimeout(() => {
+      $$('.hero-text,.sign-stage,.rep-card-neon').forEach(el => {
+        if (!el.classList.contains('visible')) el.classList.add('visible');
+      });
+      const glow = $('.sign-glow-overlay');
+      const refl = $('.sign-reflection');
+      const flare = $('.lens-flare');
+      const vGlow = $('.volumetric-glow');
+      if (glow && !glow.classList.contains('active')) { glow.style.opacity='1'; glow.classList.add('active'); }
+      if (refl && !refl.classList.contains('active')) { refl.style.opacity='1'; refl.classList.add('active'); }
+      if (flare && !flare.classList.contains('active')) { flare.style.opacity='1'; flare.classList.add('active'); }
+      if (vGlow && !vGlow.classList.contains('active')) { vGlow.style.opacity='1'; vGlow.classList.add('active'); }
+      const stage = $('.sign-stage');
+      if (stage && !stage.querySelector('.sign-on')) injectLitSign(stage);
+    }, 10000);
   });
 
 })();
