@@ -132,6 +132,7 @@
     photo.innerHTML = '<picture><source srcset="placa-ligada-600w.webp 600w, placa-ligada-900w.webp 900w, placa-ligada-1000w.webp 1000w" sizes="(max-width:480px) 240px, (max-width:768px) 350px, 400px" type="image/webp"><img src="placa ligada.png" alt="Placa Chico Car Serviços Automotivos iluminada com neon laranja" width="400" height="533" decoding="async"></picture>';
     stage.appendChild(photo);
 
+    photo.offsetHeight;
     requestAnimationFrame(() => {
       photo.style.opacity = '1';
     });
