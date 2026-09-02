@@ -19,13 +19,13 @@
   const CFG = {
     particleCountMobile: 10,
     particleCountTablet: 20,
-    particleCountDesktop: 30,
+    particleCountDesktop: 15,
     particleMinSize: 1,
     particleMaxSize: 3,
     maxRotateX: 4,
     maxRotateY: 5,
     lerpSpeed: 0.035,
-    timelineDelay: 200
+    timelineDelay: 50
   };
 
   const $ = (s, p) => (p || document).querySelector(s);
@@ -53,7 +53,6 @@
     const repCard = $('.rep-card-neon');
 
     if (prefersReducedMotion()) {
-      // Instant reveal for reduced-motion users
       [heroText, signStage, repCard].forEach(el => el && el.classList.add('visible'));
       if (glowOverlay) { glowOverlay.style.opacity = '1'; glowOverlay.classList.add('active'); }
       if (reflection) { reflection.style.opacity = '1'; reflection.classList.add('active'); }
@@ -65,6 +64,9 @@
     }
 
     if (!signStage) return;
+
+    // Adiciona classe para animar entrada (não esconde o conteúdo — preserva LCP)
+    if (heroText) heroText.classList.add('animate-in');
 
     // Timeline: [delay_ms, action]
     // Cinematic: desligada visível 4s → transição suave 3.2s → glow+reflection+flare → rep
@@ -127,7 +129,7 @@
     if (stage.querySelector('.sign-on')) return;
     const photo = document.createElement('div');
     photo.className = 'sign-photo sign-on';
-    photo.innerHTML = '<picture><source srcset="placa-ligada.webp" type="image/webp"><img src="placa ligada.png" alt="Placa Chico Car Serviços Automotivos iluminada com neon laranja" width="400" height="533" decoding="async"></picture>';
+    photo.innerHTML = '<picture><source srcset="placa-ligada-600w.webp 600w, placa-ligada-900w.webp 900w, placa-ligada-1000w.webp 1000w" sizes="(max-width:480px) 240px, (max-width:768px) 350px, 400px" type="image/webp"><img src="placa ligada.png" alt="Placa Chico Car Serviços Automotivos iluminada com neon laranja" width="400" height="533" decoding="async"></picture>';
     stage.appendChild(photo);
 
     requestAnimationFrame(() => {

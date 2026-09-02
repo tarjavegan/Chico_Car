@@ -56,7 +56,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="style.css"></noscript>
 </head>
 <body>
 
@@ -177,7 +178,7 @@
             <!-- Placa desligada (visível por padrão, fase 1-2) -->
             <div class="sign-photo sign-off">
               <picture>
-                <source srcset="placa-desligada.webp" type="image/webp">
+                <source srcset="placa-desligada-400w.webp 400w, placa-desligada-800w.webp 800w" sizes="(max-width:480px) 240px, (max-width:768px) 350px, 400px" type="image/webp">
                 <img src="Placa desligada.jpeg" alt="Placa Chico Car Serviços Automotivos desligada durante o dia" width="400" height="533" decoding="async" fetchpriority="high">
               </picture>
               <div class="sign-off-overlay"></div>
@@ -189,7 +190,7 @@
           <!-- Reflexo no piso (showroom) -->
           <div class="sign-reflection">
             <picture>
-              <source srcset="placa-ligada.webp" type="image/webp">
+              <source srcset="placa-ligada-600w.webp 600w, placa-ligada-900w.webp 900w, placa-ligada-1000w.webp 1000w" sizes="(max-width:480px) 240px, (max-width:768px) 350px, 400px" type="image/webp">
               <img src="placa ligada.png" alt="" aria-hidden="true" loading="lazy" width="400" height="533" decoding="async">
             </picture>
           </div>
@@ -419,6 +420,6 @@
   </a>
   <a href="#inicio" class="btt" id="backToTop" aria-label="Voltar ao topo">↑</a>
 
-  <script src="neon.js"></script>
+  <script src="neon.js" defer></script>
 </body>
 </html>
