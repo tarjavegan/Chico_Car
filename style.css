@@ -60,21 +60,21 @@ button{font-family:inherit;cursor:pointer}
 .nav-links a:hover{color:#fff}
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-cta{display:flex;align-items:center;gap:20px}
-.nav-wa{display:flex;align-items:center;gap:6px;color:#25D366;font-size:14px;font-weight:600;padding:8px 16px;border-radius:8px;border:1.5px solid #25D366;background:rgba(37,211,102,.06);transition:all .25s}
-.nav-wa svg{fill:#25D366;transition:fill .25s}
-.nav-wa:hover{color:#fff;background:#25D366;border-color:#25D366;box-shadow:0 0 16px rgba(37,211,102,.4),0 0 40px rgba(37,211,102,.2)}
+.nav-wa{display:flex;align-items:center;gap:6px;color:#25D366;font-size:14px;font-weight:600;padding:8px 16px;border-radius:8px;border:1.5px solid #25D366;background:rgba(37,211,102,.06);transition:transform .25s,box-shadow .25s,background .25s}
+.nav-wa svg{fill:#25D366}
+.nav-wa:hover{background:#25D366;transform:scale(1.02);box-shadow:0 0 16px rgba(37,211,102,.4),0 0 40px rgba(37,211,102,.2)}
 .nav-wa:hover svg{fill:#fff}
-.btn-gold{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#111;padding:12px 24px;font-weight:700;font-size:14px;border:none;transition:all .2s}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#111;padding:12px 24px;font-weight:700;font-size:14px;border:none;transition:transform .2s,box-shadow .2s,background .2s}
 .btn-gold:hover{background:var(--orange-bright);transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,122,0,.3)}
-.btn-dark{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:12px 24px;font-weight:600;font-size:14px;border:1px solid rgba(255,255,255,.12);transition:all .2s}
+.btn-dark{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:12px 24px;font-weight:600;font-size:14px;border:1px solid rgba(255,255,255,.12);transition:transform .2s,border-color .2s,color .2s}
 .btn-dark:hover{border-color:var(--blue-light);color:var(--blue-light)}
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;z-index:110;padding:8px}
 .hamburger span{width:24px;height:2px;background:#fff;transition:all .3s;border-radius:2px}
 .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .hamburger.active span:nth-child(2){opacity:0}
 .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-.mobile-menu{position:fixed;top:80px;left:0;right:0;bottom:0;background:rgba(5,5,5,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;opacity:0;visibility:hidden;transition:all .3s;z-index:99;overflow-y:auto;-webkit-overflow-scrolling:touch;will-change:opacity,visibility}
-.mobile-menu.active{opacity:1;visibility:visible}
+.mobile-menu{position:fixed;top:80px;left:0;right:0;bottom:0;background:rgba(5,5,5,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:99;overflow-y:auto;-webkit-overflow-scrolling:touch;will-change:opacity}
+.mobile-menu.active{opacity:1;pointer-events:auto}
 .mobile-menu a{color:#fff;font-size:18px;font-weight:600}
 @media(max-width:900px){.nav-links,.nav-cta{display:none}.hamburger{display:flex}}
 
@@ -259,7 +259,7 @@ button{font-family:inherit;cursor:pointer}
   display:inline-flex;align-items:center;gap:10px;
   background:var(--orange);color:#050505;padding:16px 32px;
   font-weight:700;font-size:15px;border:none;border-radius:0;
-  transition:all .25s;box-shadow:0 0 15px rgba(255,122,0,.4),0 0 40px rgba(255,122,0,.2);
+  transition:transform .25s,box-shadow .25s,background .25s;box-shadow:0 0 15px rgba(255,122,0,.4),0 0 40px rgba(255,122,0,.2);
 }
 .btn-neon-orange:hover{
   background:var(--orange-bright);transform:translateY(-2px);
@@ -270,7 +270,7 @@ button{font-family:inherit;cursor:pointer}
   display:inline-flex;align-items:center;gap:10px;
   background:transparent;color:#25D366;padding:16px 32px;
   font-weight:700;font-size:15px;border:2px solid #128C7E;border-radius:0;
-  transition:all .25s;box-shadow:0 0 10px rgba(37,211,102,.1);
+  transition:transform .25s,box-shadow .25s,background .25s,border-color .25s,color .25s;box-shadow:0 0 10px rgba(37,211,102,.1);
 }
 .btn-neon-green:hover{
   background:#128C7E;color:var(--white);border-color:#25D366;transform:translateY(-2px);
