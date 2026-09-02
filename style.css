@@ -199,7 +199,7 @@ button{font-family:inherit;cursor:pointer}
   display:grid;
   grid-template-columns:1fr 1.2fr;
   gap:3rem;
-  align-items:start;
+  align-items:center;
 }
 
 /* ── LEFT: TEXT ── */
@@ -281,6 +281,7 @@ button{font-family:inherit;cursor:pointer}
 
 /* ── RIGHT: SIGN PHOTOS (REAL) ── */
 .hero-sign{
+  grid-column:2;grid-row:1/-1;
   display:flex;flex-direction:column;align-items:center;
   perspective:1200px;position:relative;
 }
@@ -562,7 +563,7 @@ footer h4{font-size:13px;font-weight:700;color:#F0F0F0;text-transform:uppercase;
     text-align:center;
   }
   .hero-text{order:1}
-  .hero-sign{order:2;width:100%;max-width:420px;margin:0 auto}
+  .hero-sign{order:2;grid-column:auto;grid-row:auto}
   .rep-card-neon{order:3}
   .hero-title-neon{font-size:clamp(2.5rem,10vw,4rem)}
   .hero-subtitle-neon{font-size:1rem}
