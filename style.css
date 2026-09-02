@@ -199,7 +199,7 @@ button{font-family:inherit;cursor:pointer}
   display:grid;
   grid-template-columns:1fr 1.2fr;
   gap:3rem;
-  align-items:center;
+  align-items:start;
 }
 
 /* ── LEFT: TEXT ── */
@@ -364,6 +364,7 @@ button{font-family:inherit;cursor:pointer}
 
 /* ── REP CARD ── */
 .rep-card-neon{
+  grid-column:1;
   margin-top:2rem;
   background:rgba(15,15,15,.92);
   border:1.5px solid rgba(255,122,0,.3);border-radius:20px;
@@ -562,6 +563,7 @@ footer h4{font-size:13px;font-weight:700;color:#F0F0F0;text-transform:uppercase;
   }
   .hero-text{order:1}
   .hero-sign{order:2}
+  .rep-card-neon{order:3}
   .hero-title-neon{font-size:clamp(2.5rem,10vw,4rem)}
   .hero-subtitle-neon{font-size:1rem}
   .hero-description{max-width:100%;margin-left:auto;margin-right:auto}
