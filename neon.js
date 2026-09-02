@@ -124,13 +124,12 @@
 
   // Inject the lit sign photo and crossfade it in
   function injectLitSign(stage) {
+    if (stage.querySelector('.sign-on')) return;
     const photo = document.createElement('div');
     photo.className = 'sign-photo sign-on';
-    photo.innerHTML = '<img src="placa ligada.png" alt="Placa Chico Car Serviços Automotivos iluminada com neon laranja" width="400" height="533">';
+    photo.innerHTML = '<picture><source srcset="placa-ligada.webp" type="image/webp"><img src="placa ligada.png" alt="Placa Chico Car Serviços Automotivos iluminada com neon laranja" width="400" height="533" decoding="async"></picture>';
     stage.appendChild(photo);
 
-    // Force reflow, then trigger crossfade
-    photo.offsetHeight;
     requestAnimationFrame(() => {
       photo.style.opacity = '1';
     });

@@ -176,7 +176,10 @@
           <div class="sign-stage">
             <!-- Placa desligada (visível por padrão, fase 1-2) -->
             <div class="sign-photo sign-off">
-              <img src="Placa desligada.jpeg" alt="Placa Chico Car Serviços Automotivos desligada durante o dia" width="400" height="533">
+              <picture>
+                <source srcset="placa-desligada.webp" type="image/webp">
+                <img src="Placa desligada.jpeg" alt="Placa Chico Car Serviços Automotivos desligada durante o dia" width="400" height="533" decoding="async" fetchpriority="high">
+              </picture>
               <div class="sign-off-overlay"></div>
             </div>
             <!-- Placa ligada será injetada via JS no momento do crossfade -->
@@ -185,7 +188,10 @@
           </div>
           <!-- Reflexo no piso (showroom) -->
           <div class="sign-reflection">
-            <img src="placa ligada.png" alt="" aria-hidden="true" loading="lazy">
+            <picture>
+              <source srcset="placa-ligada.webp" type="image/webp">
+              <img src="placa ligada.png" alt="" aria-hidden="true" loading="lazy" width="400" height="533" decoding="async">
+            </picture>
           </div>
         </div>
 
