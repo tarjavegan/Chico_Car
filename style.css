@@ -1,5 +1,5 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto}
 :root{
   --black:#050505;--dark:#111111;
   --blue:#005DBA;--blue-light:#0D7DFF;
@@ -48,7 +48,7 @@ button{font-family:inherit;cursor:pointer}
 /* ═══════════════════════════════════════════
    NAV
    ═══════════════════════════════════════════ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,5,.92);border-bottom:1px solid rgba(255,122,0,.06);transition:box-shadow .3s;will-change:transform}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,5,.92);border-bottom:1px solid rgba(255,122,0,.06);transition:box-shadow .3s}
 .nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.6)}
 .nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:80px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{font-size:22px;font-weight:700;color:var(--orange);display:flex;align-items:center;gap:12px;transition:opacity .2s}
@@ -73,7 +73,7 @@ button{font-family:inherit;cursor:pointer}
 .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .hamburger.active span:nth-child(2){opacity:0}
 .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-.mobile-menu{position:fixed;top:80px;left:0;right:0;bottom:0;background:rgba(5,5,5,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:99;overflow-y:auto;-webkit-overflow-scrolling:touch;will-change:opacity}
+.mobile-menu{position:fixed;top:80px;left:0;right:0;bottom:0;background:rgba(5,5,5,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:99;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .mobile-menu.active{opacity:1;pointer-events:auto}
 .mobile-menu a{color:#fff;font-size:18px;font-weight:600}
 @media(max-width:900px){.nav-links,.nav-cta{display:none}.hamburger{display:flex}}
@@ -105,7 +105,7 @@ button{font-family:inherit;cursor:pointer}
   background:
     repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.025) 2px,rgba(255,255,255,.025) 4px),
     repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(255,255,255,.015) 2px,rgba(255,255,255,.015) 4px);
-  pointer-events:none;will-change:auto;
+  pointer-events:none;
 }
 
 /* Textura industrial automotiva (ferramentas, estrutura metálica) */
@@ -129,7 +129,6 @@ button{font-family:inherit;cursor:pointer}
     radial-gradient(circle at 80% 70%,rgba(13,125,255,.03) 0%,transparent 35%),
     radial-gradient(circle at 50% 50%,rgba(255,176,0,.02) 0%,transparent 45%);
   animation:meshDrift 20s ease-in-out infinite alternate;
-  will-change:transform;
 }
 @keyframes meshDrift{
   0%{transform:translate(0,0) scale(1)}
@@ -140,7 +139,7 @@ button{font-family:inherit;cursor:pointer}
 .volumetric-light{
   position:absolute;top:-20%;left:25%;right:25%;bottom:35%;z-index:3;
   background:radial-gradient(ellipse at center,rgba(255,122,0,.04) 0%,transparent 65%);
-  pointer-events:none;will-change:transform,opacity;
+  pointer-events:none;
   opacity:0;transition:opacity 2s ease-in;
 }
 .volumetric-light.active{opacity:1;animation:volumeBreath 6s ease-in-out infinite}
@@ -152,11 +151,11 @@ button{font-family:inherit;cursor:pointer}
     radial-gradient(ellipse 40% 30% at 60% 80%,rgba(255,255,255,.007) 0%,transparent 70%),
     radial-gradient(ellipse 30% 20% at 30% 70%,rgba(255,255,255,.005) 0%,transparent 60%);
   animation:smokeFloat 20s ease-in-out infinite alternate;
-  pointer-events:none;will-change:transform;
+  pointer-events:none;
 }
 @keyframes smokeFloat{0%{transform:translateX(0) translateY(0)}100%{transform:translateX(20px) translateY(-10px)}}
 
-.particles-container{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden;will-change:auto}
+.particles-container{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden}
 
 /* ── PARTICLES ── */
 .particle{
@@ -164,7 +163,6 @@ button{font-family:inherit;cursor:pointer}
   background:rgba(255,176,0,.3);
   pointer-events:none;
   animation:particleFloat linear infinite;
-  will-change:transform;
   box-shadow:0 0 2px rgba(255,176,0,.15);
 }
 @keyframes particleFloat{
@@ -179,7 +177,7 @@ button{font-family:inherit;cursor:pointer}
   position:absolute;top:10%;right:25%;width:400px;height:400px;z-index:6;
   background:radial-gradient(circle,rgba(255,176,0,.06) 0%,rgba(255,122,0,.025) 30%,transparent 55%);
   border-radius:50%;pointer-events:none;
-  opacity:0;transition:opacity 3s ease-in;will-change:opacity,transform;
+  opacity:0;transition:opacity 3s ease-in;
 }
 .lens-flare.active{opacity:1;animation:flareCinematic 8s ease-in-out infinite}
 @keyframes flareCinematic{
@@ -231,7 +229,7 @@ button{font-family:inherit;cursor:pointer}
   content:'';position:absolute;top:0;left:0;width:60%;height:100%;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
   animation:lightSweep 6s ease-in-out infinite;
-  pointer-events:none;will-change:transform;
+  pointer-events:none;
 }
 @keyframes lightSweep{
   0%,100%{transform:translateX(-100%);opacity:0}
@@ -296,7 +294,7 @@ button{font-family:inherit;cursor:pointer}
     radial-gradient(ellipse at 40% 50%,rgba(255,176,0,.05) 0%,transparent 55%),
     radial-gradient(ellipse at 60% 40%,rgba(255,122,0,.04) 0%,transparent 50%);
   opacity:0;transition:opacity 3s ease-in;
-  pointer-events:none;will-change:opacity;
+  pointer-events:none;
 }
 .volumetric-glow.active{opacity:1;animation:volumetricBreath 5s ease-in-out infinite}
 @keyframes volumetricBreath{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
@@ -307,7 +305,6 @@ button{font-family:inherit;cursor:pointer}
   box-shadow:0 0 60px rgba(0,0,0,.6),0 0 120px rgba(255,122,0,.04);
   transform:scale(.92);opacity:0;
   transition:transform 1.4s cubic-bezier(.16,1,.3,1),opacity 1.4s cubic-bezier(.16,1,.3,1);
-  will-change:transform,opacity;
 }
 .sign-stage.visible{transform:scale(1);opacity:1}
 
@@ -343,7 +340,7 @@ button{font-family:inherit;cursor:pointer}
   position:absolute;inset:-25%;z-index:3;
   background:radial-gradient(ellipse at 50% 40%,rgba(255,122,0,.14) 0%,rgba(255,122,0,.06) 35%,rgba(255,176,0,.02) 55%,transparent 70%);
   pointer-events:none;opacity:0;
-  transition:opacity 5s ease-in;will-change:opacity,transform;
+  transition:opacity 5s ease-in;
 }
 .sign-glow-overlay.active{opacity:1;animation:glowBreath 4s ease-in-out infinite}
 @keyframes glowBreath{
@@ -354,7 +351,7 @@ button{font-family:inherit;cursor:pointer}
 /* ── REFLEXO NO PISO (showroom) ── */
 .sign-reflection{
   width:88%;height:90px;margin-top:-2px;overflow:hidden;
-  opacity:0;transition:opacity 3s ease-in;will-change:opacity;
+  opacity:0;transition:opacity 3s ease-in;
 }
 .sign-reflection.active{opacity:1}
 .sign-reflection img{
@@ -374,7 +371,7 @@ button{font-family:inherit;cursor:pointer}
   padding:24px 28px;width:280px;
   opacity:0;transition:opacity .7s cubic-bezier(.22,1,.36,1);
   box-shadow:0 12px 48px rgba(0,0,0,.6),0 0 60px rgba(255,122,0,.12);
-  overflow:hidden;will-change:opacity,transform;
+  overflow:hidden;
 }
 .rep-card-neon.visible{opacity:1}
 .rep-card-neon:hover{
@@ -395,7 +392,7 @@ button{font-family:inherit;cursor:pointer}
 /* ═══════════════════════════════════════════
    SECTIONS
    ═══════════════════════════════════════════ */
-.section{padding:100px 0;contain:layout style paint}
+.section{padding:100px 0}
 .section.alt{background:var(--bg2)}
 .label{display:inline-flex;align-items:center;gap:8px;background:rgba(255,122,0,.1);border:1px solid rgba(255,122,0,.2);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
 .sec-title{font-size:clamp(28px,3.5vw,42px);font-weight:800;letter-spacing:-.5px;line-height:1.15;margin-bottom:16px}
@@ -534,7 +531,7 @@ footer h4{font-size:13px;font-weight:700;color:#F0F0F0;text-transform:uppercase;
 /* FLOATING */
 .wa-float{position:fixed;bottom:32px;left:32px;z-index:90;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(37,211,102,.35);transition:all .3s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .wa-float:hover{transform:scale(1.08)}
-.btt{position:fixed;bottom:32px;right:32px;z-index:90;width:48px;height:48px;border-radius:50%;background:var(--orange);color:#050505;display:flex;align-items:center;justify-content:center;border:none;font-size:18px;opacity:0;visibility:hidden;transform:translateY(12px);transition:all .3s;box-shadow:0 4px 20px rgba(255,122,0,.3);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.btt{position:fixed;bottom:32px;right:32px;z-index:90;width:48px;height:48px;border-radius:50%;background:var(--orange);color:#050505;display:flex;align-items:center;justify-content:center;border:none;font-size:18px;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s,visibility .3s,transform .3s;box-shadow:0 4px 20px rgba(255,122,0,.3);touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer;font-family:inherit;padding:0;line-height:1}
 .btt.visible{opacity:1;visibility:visible;transform:translateY(0)}
 .btt:hover{background:var(--orange-bright);transform:translateY(-2px)}
 
@@ -679,7 +676,7 @@ footer h4{font-size:13px;font-weight:700;color:#F0F0F0;text-transform:uppercase;
   }
   .mesh-layer,.volumetric-light,.smoke-layer,.volumetric-glow,.sign-glow-overlay{animation:none !important}
   .neon-chico::after{animation:none !important}
-  html{scroll-behavior:auto}
+html{scroll-behavior:auto}
 }
 
 /* ═══════════════════════════════════════════

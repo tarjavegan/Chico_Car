@@ -253,7 +253,7 @@
   }
 
   // ============================================================
-  //  6. BACK TO TOP — INSTANT SCROLL (zero lag)
+  //  6. BACK TO TOP — INSTANT (no layout thrash)
   // ============================================================
   function initBTT() {
     const btn = $('.btt');
@@ -265,16 +265,30 @@
 
     btn.addEventListener('click', e => {
       e.preventDefault();
-      rafLoopsPaused = true;
+      btn.blur();
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      requestAnimationFrame(() => { rafLoopsPaused = false; });
     });
   }
 
   // ============================================================
-  //  7. MOBILE MENU
+  //  7. ANCHOR SCROLL — instant jump
+  // ============================================================
+  function initAnchorScroll() {
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href');
+      if (!id || id === '#') return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo(0, top);
+    }, { passive: false });
+  }
+
+  // ============================================================
+  //  8. MOBILE MENU
   // ============================================================
   function initMenu() {
     const hamburger = $('.hamburger');
@@ -388,6 +402,7 @@
     initReveal();
     initNav();
     initBTT();
+    initAnchorScroll();
     initMenu();
     initMap();
     initFAQ();
